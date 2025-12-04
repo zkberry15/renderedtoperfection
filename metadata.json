@@ -1,0 +1,5 @@
+{
+  "name": "Nano Banana Image Editor",
+  "description": "An AI-powered image editing app using Gemini 2.5 Flash Image. Upload a reference image, apply text prompts, select body types, styles, and aspect ratios to generate multiple edited images concurrently. Preserves key features while allowing creative transformations.",
+  "requestFramePermissions": []
+}

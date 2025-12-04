@@ -16,7 +16,13 @@ import { generateEditedImage, checkApiKeyStatus, openApiKeySelection } from './s
 import { downloadImage, copyImageToClipboard, shareImage } from './utils/imageUtils'; // Import shareImage
 
 // --- Generation Limit Constants ---
-const MAX_GENERATIONS_PER_DAY = 50; // Changed from 4 to 50
+constconst FREE_LIMIT = 30;
+const PAID_LIMIT = 100;
+
+function getDailyLimit(user: any) {
+  if (user?.plan === "paid") return PAID_LIMIT;
+  return FREE_LIMIT;
+}
 const LOCAL_STORAGE_KEY_COUNT = 'generationCount';
 const LOCAL_STORAGE_KEY_DATE = 'lastResetDate';
 
@@ -119,7 +125,8 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const generationsRemaining = MAX_GENERATIONS_PER_DAY - generationTodayCount;
+  const generationsRemaining = generationCount >= getDailyLimit(user)
+
 
   // --- Initialize Current Generation Results ---
   useEffect(() => {
@@ -184,7 +191,7 @@ const App: React.FC = () => {
       return;
     }
 
-    if (generationTodayCount >= MAX_GENERATIONS_PER_DAY) {
+    if (generationTodayCount >= MAX_GENERATIONS_PER_DAY 30) {
       alert(`Daily generation limit reached (${MAX_GENERATIONS_PER_DAY}). Please try again tomorrow.`);
       return;
     }
@@ -324,7 +331,7 @@ const App: React.FC = () => {
               <p>Please select a paid API key for image generation. <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Learn more about billing.</a></p>
             </div>
           )}
-        {generationTodayCount < MAX_GENERATIONS_PER_DAY ? (
+        {generationTodayCount < MAX_GENERATIONS_PER_DAY 30 (
           <p className="text-sm text-center text-gray-600">
             Generations today: {generationTodayCount}/{MAX_GENERATIONS_PER_DAY} (Remaining: {generationsRemaining})
           </p>

@@ -16,8 +16,7 @@ import { generateEditedImage, checkApiKeyStatus, openApiKeySelection } from './s
 import { downloadImage, copyImageToClipboard, shareImage } from './utils/imageUtils'; // Import shareImage
 
 // --- Generation Limit Constants ---
-constconst FREE_LIMIT = 30;
-const PAID_LIMIT = 100;
+const FREE_LIMIT = 30;
 
 function getDailyLimit(user: any) {
   if (user?.plan === "paid") return PAID_LIMIT;

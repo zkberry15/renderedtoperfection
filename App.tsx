@@ -73,19 +73,38 @@ const App: React.FC = () => {
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [selectedImageForModal, setSelectedImageForModal] = useState<string | null>(null);
   const [generationTodayCount, setGenerationTodayCount] = useState<number>(0);
-https://renderedtoperfection.vercel.app/?adminReset=1
+// ===== SECRET ADMIN RESET (ONLY FOR YOU) =====
+useEffect(() => {
+  if (typeof window === 'undefined') return;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('adminReset') === '1') {
+    localStorage.removeItem(LOCAL_STORAGE_KEY_COUNT);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_DATE);
+    setGenerationTodayCount(0);
+
+    params.delete('adminReset');
+    const newUrl =
+      window.location.pathname +
+      (params.toString() ? `?${params.toString()}` : '');
+
+    window.history.replaceState({}, '', newUrl);
+  }
+}, []);
+// ===========================================
 
   // --- API Key Check ---
-  const checkKey = useCallback(async () => {
-    const hasKey = await checkApiKeyStatus();
-    setApiKeySelected(hasKey);
-    if (!hasKey) {
-      setTimeout(async () => {
-        await openApiKeySelection();
-        setApiKeySelected(true);
-      }, 500);
-    }
-  }, []);
+const checkKey = useCallback(async () => {
+  const hasKey = await checkApiKeyStatus();
+  setApiKeySelected(hasKey);
+  if (!hasKey) {
+    setTimeout(async () => {
+      await openApiKeySelection();
+      setApiKeySelected(true);
+    }, 500);
+  }
+}, []);
+
 
   useEffect(() => {
     checkKey();

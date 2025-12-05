@@ -31,7 +31,7 @@ import {
 } from './utils/imageUtils';
 
 // Generation limit constants
-const MAX_GENERATIONS_PER_DAY = 30;
+const MAX_GENERATIONS_PER_DAY = 50;
 const LOCAL_STORAGE_KEY_COUNT = 'generationCount';
 const LOCAL_STORAGE_KEY_DATE = 'lastResetDate';
 

@@ -42,7 +42,6 @@ const App: React.FC = () => {
   const today = getTodayEstMidnight().toString();
 
   if (storedDate !== today) {
-    // New day → reset count
     localStorage.setItem(LOCAL_STORAGE_KEY_DATE, today);
     localStorage.setItem(LOCAL_STORAGE_KEY_COUNT, "0");
     setGenerationCount(0);

@@ -35,7 +35,16 @@ const App: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [apiKeySelected, setApiKeySelected] = useState<boolean>(false);
   const [initialOptions, setInitialOptions] = useState<ImageGenerationOptions>({
-    useEffect(() => {
+ 
+
+    prompt: '',
+    bodyType: DEFAULT_BODY_TYPE,
+    style: DEFAULT_STYLE,
+    aspectRatio: DEFAULT_ASPECT_RATIO,
+    customWeightPounds: undefined,
+    gender: DEFAULT_GENDER,
+  });
+  useEffect(() => {
   const storedCount = localStorage.getItem(LOCAL_STORAGE_KEY_COUNT);
   const storedDate = localStorage.getItem(LOCAL_STORAGE_KEY_DATE);
 
@@ -49,14 +58,6 @@ const App: React.FC = () => {
     setGenerationCount(parseInt(storedCount, 10));
   }
 }, []);
-
-    prompt: '',
-    bodyType: DEFAULT_BODY_TYPE,
-    style: DEFAULT_STYLE,
-    aspectRatio: DEFAULT_ASPECT_RATIO,
-    customWeightPounds: undefined,
-    gender: DEFAULT_GENDER,
-  });
   const [outputCount, setOutputCount] = useState<number>(DEFAULT_GENERATION_COUNT);
   const [currentGenerationResults, setCurrentGenerationResults] = useState<GeneratedImage[]>([]);
   const [imageHistory, setImageHistory] = useState<GeneratedImage[]>([]);

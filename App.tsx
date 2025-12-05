@@ -25,6 +25,7 @@ function getDailyLimit(user: any) {
 const LOCAL_STORAGE_KEY_COUNT = 'generationCount';
 const LOCAL_STORAGE_KEY_DATE = 'lastResetDate';
 
+
 const App: React.FC = () => {
   const [uploadedImageBase64, setUploadedImageBase64] = useState<string | null>(null);
   const [uploadedImageFileName, setUploadedImageFileName] = useState<string | null>(null);
@@ -34,6 +35,22 @@ const App: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [apiKeySelected, setApiKeySelected] = useState<boolean>(false);
   const [initialOptions, setInitialOptions] = useState<ImageGenerationOptions>({
+    useEffect(() => {
+  const storedCount = localStorage.getItem(LOCAL_STORAGE_KEY_COUNT);
+  const storedDate = localStorage.getItem(LOCAL_STORAGE_KEY_DATE);
+
+  const today = getTodayEstMidnight().toString();
+
+  if (storedDate !== today) {
+    // New day → reset count
+    localStorage.setItem(LOCAL_STORAGE_KEY_DATE, today);
+    localStorage.setItem(LOCAL_STORAGE_KEY_COUNT, "0");
+    setGenerationCount(0);
+  } else if (storedCount) {
+    setGenerationCount(parseInt(storedCount, 10));
+  }
+}, []);
+
     prompt: '',
     bodyType: DEFAULT_BODY_TYPE,
     style: DEFAULT_STYLE,

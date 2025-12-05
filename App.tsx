@@ -73,6 +73,7 @@ const App: React.FC = () => {
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [selectedImageForModal, setSelectedImageForModal] = useState<string | null>(null);
   const [generationTodayCount, setGenerationTodayCount] = useState<number>(0);
+https://renderedtoperfection.vercel.app/?adminReset=1
 
   // --- API Key Check ---
   const checkKey = useCallback(async () => {

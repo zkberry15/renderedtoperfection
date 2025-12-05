@@ -72,7 +72,7 @@ const App: React.FC = () => {
   const [imageHistory, setImageHistory] = useState<GeneratedImage[]>([]);
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [selectedImageForModal, setSelectedImageForModal] = useState<string | null>(null);
-    const [generationTodayCount, setGenerationTodayCount] = useState<number>(0);
+  const [generationTodayCount, setGenerationTodayCount] = useState<number>(0);
 
   // --- API Key Check ---
   const checkKey = useCallback(async () => {
@@ -91,6 +91,7 @@ const App: React.FC = () => {
   }, [checkKey]);
 
   // ===== SECRET ADMIN RESET (ONLY FOR YOU) =====
+  // Visit ?adminReset=1 once on a device to reset that device's daily usage
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -103,16 +104,15 @@ const App: React.FC = () => {
       params.delete('adminReset');
       const newUrl =
         window.location.pathname +
-        (params.toString() ? `?${params.toString()}` : '');
+        (params.toString() ? `?${params.toString()}` : '') +
+        window.location.hash;
 
       window.history.replaceState({}, '', newUrl);
     }
   }, []);
   // ===========================================
 
-
   // --- Generation Limit Logic ---
-
   const loadGenerationData = useCallback(() => {
     const storedCount = localStorage.getItem(LOCAL_STORAGE_KEY_COUNT);
     const storedDate = localStorage.getItem(LOCAL_STORAGE_KEY_DATE);
@@ -168,7 +168,8 @@ const App: React.FC = () => {
         }))
       );
     }
-  }, [outputCount, uploadedImageBase64, initialOptions, currentGenerationResults.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [outputCount, uploadedImageBase64, initialOptions]);
 
   // --- Image Upload Handlers ---
   const handlePrimaryImageSelect = (base64Image: string, fileName: string) => {
@@ -430,7 +431,7 @@ const App: React.FC = () => {
       </aside>
 
       {/* Main Content Area for Generated Images */}
-      <main className="flex-1 w-full p-4 lg:p-8 flex flex-col">
+      <main className="flex-1 w-full p-4 lg:p-8 flex flex.col">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
           Generated Images
         </h2>
@@ -451,7 +452,7 @@ const App: React.FC = () => {
                   <img
                     src={secondUploadedImageBase64}
                     alt="Secondary Reference"
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h.full"
                   />
                   <p className="text-xs text-gray-600 mt-1">Optional: {secondUploadedImageFileName}</p>
                 </div>
